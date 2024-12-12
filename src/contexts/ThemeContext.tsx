@@ -2,15 +2,17 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { theme } from 'antd';
 import type { ThemeConfig } from 'antd';
 
-type ThemeContextType = {
-  themeMode: 'light' | 'dark' | 'system';
-  setThemeMode: (mode: 'light' | 'dark' | 'system') => void;
+type ThemeMode = 'light' | 'dark' | 'system';
+
+interface ThemeContextValue {
+  themeMode: ThemeMode;
+  setThemeMode: (mode: ThemeMode) => void;
   isDarkMode: boolean;
-};
+}
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-export const useTheme = () => {
+export const useTheme = (): ThemeContextValue => {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
@@ -18,20 +20,24 @@ export const useTheme = () => {
   return context;
 };
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [themeMode, setThemeMode] = useState<'light' | 'dark' | 'system'>(() => {
-    const savedMode = localStorage.getItem('themeMode');
-    return (savedMode as 'light' | 'dark' | 'system') || 'dark';
+interface ThemeProviderProps {
+  children: React.ReactNode;
+}
+
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }): JSX.Element => {
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+    const savedMode = localStorage.getItem('themeMode') as ThemeMode | null;
+    return savedMode ?? 'dark';
   });
 
-  const [isDarkMode, setIsDarkMode] = useState(() => {
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     if (themeMode === 'system') {
       return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
     return themeMode === 'dark';
   });
 
-  useEffect(() => {
+  useEffect((): void => {
     localStorage.setItem('themeMode', themeMode);
 
     if (themeMode === 'system') {
@@ -43,9 +49,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
   }, [themeMode, isDarkMode]);
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => {
+    const handleChange = (e: MediaQueryListEvent): void => {
       if (themeMode === 'system') {
         setIsDarkMode(e.matches);
       }
@@ -55,23 +61,38 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [themeMode]);
 
+  const contextValue: ThemeContextValue = {
+    themeMode,
+    setThemeMode,
+    isDarkMode
+  };
+
   return (
-    <ThemeContext.Provider value={{ themeMode, setThemeMode, isDarkMode }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
+interface ThemeTokens {
+  colorPrimary: string;
+  borderRadius: number;
+  colorBgContainer: string;
+  fontFamily: string;
+}
+
 export const getThemeConfig = (isDark: boolean): ThemeConfig => {
   const { darkAlgorithm, defaultAlgorithm } = theme;
 
+  const tokens: ThemeTokens = {
+    colorPrimary: '#60a5fa',
+    borderRadius: 6,
+    colorBgContainer: isDark ? 'rgba(39, 39, 42, 0.6)' : 'rgba(255, 255, 255, 0.9)',
+    fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+  };
+
   return {
-    token: {
-      colorPrimary: '#60a5fa',
-      borderRadius: 6,
-      colorBgContainer: isDark ? 'rgba(39, 39, 42, 0.6)' : 'rgba(255, 255, 255, 0.9)',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-    },
+    token: tokens,
     algorithm: isDark ? darkAlgorithm : defaultAlgorithm,
   };
 }; 

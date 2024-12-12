@@ -1,4 +1,6 @@
 import { Table, Button, Tag, Space, Popconfirm, notification, Input, Tooltip } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+import type { TablePaginationConfig } from 'antd/es/table';
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { Task, Priority } from '../types/task';
 import dayjs from 'dayjs';
@@ -7,7 +9,7 @@ import { useState } from 'react';
 interface TaskListProps {
   tasks: Task[];
   onEdit: (task: Task) => void;
-  onDelete: (id: number) => Promise<void>;
+  onDelete: (id: number) => void;
   loading: boolean;
 }
 
@@ -31,21 +33,20 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
       });
     } catch (error) {
       notification.error({
-        message: 'Error deleting task',
+        message: 'Failed to delete task',
         description: 'Please try again later.',
       });
     }
   };
 
-  // Filter tasks based on search text
   const filteredTasks = tasks.filter(task =>
     task.title.toLowerCase().includes(searchText.toLowerCase()) ||
     task.priority.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const columns = [
+  const columns: ColumnsType<Task> = [
     {
-      title: 'Task Title',
+      title: 'Title',
       dataIndex: 'title',
       key: 'title',
       render: (text: string) => (
@@ -53,7 +54,7 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
           <div className="task-title-cell">{text}</div>
         </Tooltip>
       ),
-      sorter: (a: Task, b: Task) => a.title.localeCompare(b.title),
+      sorter: (a, b) => a.title.localeCompare(b.title),
       width: '30%',
     },
     {
@@ -80,9 +81,9 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
         { text: 'Medium', value: 'Medium' },
         { text: 'Low', value: 'Low' },
       ],
-      onFilter: (value: string | number | boolean, record: Task) => record.priority === value,
+      onFilter: (value, record) => record.priority === value,
       width: '15%',
-      align: 'center' as const,
+      align: 'center',
     },
     {
       title: 'Due Date',
@@ -93,9 +94,9 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
           <span className="text-zinc-300">{dayjs(date).format('MMM D, YYYY')}</span>
         </Tooltip>
       ),
-      sorter: (a: Task, b: Task) => dayjs(a.dueDate).unix() - dayjs(b.dueDate).unix(),
+      sorter: (a, b) => dayjs(a.dueDate).unix() - dayjs(b.dueDate).unix(),
       width: '15%',
-      align: 'center' as const,
+      align: 'center',
     },
     {
       title: 'Status',
@@ -119,14 +120,14 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
         { text: 'Completed', value: true },
         { text: 'Not Completed', value: false },
       ],
-      onFilter: (value: string | number | boolean, record: Task) => record.completed === value,
+      onFilter: (value, record) => record.completed === value,
       width: '20%',
-      align: 'center' as const,
+      align: 'center',
     },
     {
       title: 'Actions',
       key: 'actions',
-      render: (_: any, record: Task) => (
+      render: (_, record) => (
         <Space>
           <Tooltip title="Edit Task">
             <Button
@@ -158,7 +159,7 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
         </Space>
       ),
       width: '10%',
-      align: 'center' as const,
+      align: 'center',
     },
   ];
 
@@ -181,7 +182,7 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
         rowKey="id"
         loading={loading}
         pagination={{
-          position: ['bottom'],
+          position: ['bottomLeft'],
           pageSize: 5,
           showSizeChanger: true,
           showTotal: (total) => <span className="text-zinc-400">Total {total} tasks</span>,
