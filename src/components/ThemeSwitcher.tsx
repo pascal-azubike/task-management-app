@@ -3,6 +3,10 @@ import { Dropdown, Button, Tooltip } from 'antd';
 import { DesktopOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
 import { useTheme } from '../contexts/ThemeContext';
 
+/**
+ * Theme switching component that toggles between light and dark modes.
+ * Provides visual feedback for the current theme state.
+ */
 const ThemeSwitcher: React.FC = () => {
   const { themeMode, setThemeMode, isDarkMode } = useTheme();
 

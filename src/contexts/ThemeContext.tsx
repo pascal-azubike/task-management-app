@@ -24,6 +24,10 @@ interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
+/**
+ * Theme context provider that manages application-wide theme state.
+ * Handles theme persistence and provides theme switching functionality.
+ */
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }): JSX.Element => {
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     const savedMode = localStorage.getItem('themeMode') as ThemeMode | null;

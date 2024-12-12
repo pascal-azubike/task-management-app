@@ -4,6 +4,11 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+/**
+ * Form component for creating and editing tasks.
+ * Handles form validation, submission, and data updates through the mock API.
+ * Used in both create and edit modes with dynamic form behavior.
+ */
 interface TaskFormProps {
   onSubmit: (data: TaskFormData) => Promise<void>;
   initialValues?: TaskFormData;

@@ -1,78 +1,78 @@
 import axios from 'axios';
 import { Task, TaskFormData } from '../types/task';
 
-const API_URL = 'https://jsonplaceholder.typicode.com/todos';
+const API_URL = 'https://675b22589ce247eb1935bcff.mockapi.io/api/v1/tasks';
 
-// Keep track of user-created tasks only
-let currentTasks: Task[] = [];
-let nextId = 1; // Keep track of next available ID
-
+/**
+ * Service that handles API interactions for task operations.
+ * Uses MockAPI for data persistence and CRUD operations.
+ */
 export const taskService = {
-  async getTasks(): Promise<Task[]> {
-    return currentTasks;
+  async getTasks(page: number = 1, limit: number = 10): Promise<{ data: Task[], total: number }> {
+    try {
+      const response = await axios.get<Task[]>(API_URL, {
+        params: {
+          page,
+          limit,
+        },
+      });
+      
+      const total = parseInt(response.headers['x-total-count'] || '0');
+      
+      return {
+        data: response.data,
+        total,
+      };
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+      throw error;
+    }
   },
 
   async createTask(task: TaskFormData): Promise<Task> {
     try {
-      // Send to API
-      await axios.post(API_URL, {
+      // Format the task data according to the API requirements
+      const taskData = {
         title: task.title,
-        completed: task.completed,
-        userId: 1
-      });
-
-      // Create new task with our own ID
-      const newTask: Task = {
-        ...task,
-        id: nextId++, // Use and increment our own ID counter
+        completed: task.completed || false,
+        priority: task.priority,
+        dueDate: task.dueDate,
+        createdAt: new Date().toISOString(),
       };
 
-      // Add to current session
-      currentTasks = [newTask, ...currentTasks];
-      return newTask;
+      const response = await axios.post<Task>(API_URL, taskData);
+      return response.data;
     } catch (error) {
       console.error('Error creating task:', error);
-      // Still create task with our own ID even if API fails
-      const newTask: Task = {
-        ...task,
-        id: nextId++,
-      };
-      currentTasks = [newTask, ...currentTasks];
-      return newTask;
+      throw error;
     }
   },
 
-  async updateTask(id: number, task: TaskFormData): Promise<Task> {
+  async updateTask(id: number | string, task: TaskFormData): Promise<Task> {
     try {
-      // Simulate API update
-      await axios.patch(`${API_URL}/${id}`, {
+      // Format the update data according to the API requirements
+      const updateData = {
         title: task.title,
-        completed: task.completed
-      });
+        completed: task.completed,
+        priority: task.priority,
+        dueDate: task.dueDate,
+        updatedAt: new Date().toISOString(),
+      };
 
-      // Update in current session using our ID
-      const updatedTask: Task = { ...task, id };
-      currentTasks = currentTasks.map(t => t.id === id ? updatedTask : t);
-      return updatedTask;
+      const response = await axios.put<Task>(`${API_URL}/${id}`, updateData);
+      return response.data;
     } catch (error) {
       console.error('Error updating task:', error);
-      // Still update locally even if API fails
-      const updatedTask: Task = { ...task, id };
-      currentTasks = currentTasks.map(t => t.id === id ? updatedTask : t);
-      return updatedTask;
+      throw error;
     }
   },
 
-  async deleteTask(id: number): Promise<void> {
+  async deleteTask(id: number | string): Promise<void> {
     try {
-      // Attempt API delete
       await axios.delete(`${API_URL}/${id}`);
-      // Remove from current session
-      currentTasks = currentTasks.filter(t => t.id !== id);
     } catch (error) {
       console.error('Error deleting task:', error);
-      // Still remove from current session if API fails
-      currentTasks = currentTasks.filter(t => t.id !== id);
+      throw error;
     }
   }
 }; 

@@ -1,7 +1,10 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import MockApiWarning from './MockApiWarning';
 
+/**
+ * The landing page component that displays the project title and description.
+ * This component serves as the main introduction to the Task Management application.
+ */
 const ProjectInfo: React.FC = () => {
   const { isDarkMode } = useTheme();
 
@@ -13,7 +16,6 @@ const ProjectInfo: React.FC = () => {
       <p className={`text-base mt-3 ${isDarkMode ? 'text-zinc-400' : 'text-gray-600'} mb-4`}>
         A modern task management application built with React and Ant Design
       </p>
-      <MockApiWarning />
     </div>
   );
 };

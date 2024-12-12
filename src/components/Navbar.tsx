@@ -3,6 +3,11 @@ import { useTheme } from '../contexts/ThemeContext';
 import ThemeSwitcher from './ThemeSwitcher';
 import logo from '../assets/logo-white.png';
 
+/**
+ * Top navigation bar component providing app-wide navigation.
+ * Contains the app logo, navigation links, and theme toggle functionality.
+ * Remains fixed at the top while scrolling.
+ */
 const Navbar: React.FC = () => {
   const { isDarkMode } = useTheme();
 

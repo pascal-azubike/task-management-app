@@ -1,10 +1,16 @@
 import { Table, Button, Tag, Space, Popconfirm, notification, Input, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import type { TablePaginationConfig } from 'antd/es/table';
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { Task, Priority } from '../types/task';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { taskService } from '../services/taskService';
+
+/**
+ * Displays all tasks in a table format with sorting and filtering capabilities.
+ * Handles task data display, status updates, and deletion through the mock API.
+ * Implements responsive design for various screen sizes.
+ */
 
 interface TaskListProps {
   tasks: Task[];
@@ -15,6 +21,36 @@ interface TaskListProps {
 
 const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
   const [searchText, setSearchText] = useState('');
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0
+  });
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const { data, total } = await taskService.getTasks(
+          pagination.current,
+          pagination.pageSize
+        );
+        setTasks(data);
+        setPagination(prev => ({ ...prev, total }));
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
+
+    fetchTasks();
+  }, [pagination.current, pagination.pageSize]);
+
+  const handleTableChange = (newPagination: TablePaginationConfig) => {
+    setPagination({
+      current: newPagination.current || 1,
+      pageSize: newPagination.pageSize || 10,
+      total: pagination.total
+    });
+  };
 
   const getPriorityColor = (priority: Priority) => {
     const colors = {
@@ -182,11 +218,11 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
         rowKey="id"
         loading={loading}
         pagination={{
-          position: ['bottomLeft'],
-          pageSize: 5,
+          ...pagination,
           showSizeChanger: true,
           showTotal: (total) => <span className="text-zinc-400">Total {total} tasks</span>,
         }}
+        onChange={handleTableChange}
       />
     </div>
   );

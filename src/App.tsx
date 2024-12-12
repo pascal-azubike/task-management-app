@@ -9,6 +9,11 @@ import { taskService } from './services/taskService';
 import { ThemeProvider, useTheme, getThemeConfig } from './contexts/ThemeContext';
 import './App.css';
 
+/**
+ * Root component of the application.
+ * Manages the overall layout structure and routing between different views.
+ * Provides theme context and mock API data management.
+ */
 const AppContent = () => {
   const { isDarkMode } = useTheme();
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -22,7 +27,7 @@ const AppContent = () => {
 
   const fetchTasks = async () => {
     try {
-      const data = await taskService.getTasks();
+      const { data } = await taskService.getTasks();
       setTasks(data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
