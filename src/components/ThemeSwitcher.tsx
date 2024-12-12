@@ -66,7 +66,7 @@ const ThemeSwitcher: React.FC = () => {
           onClick={() => setThemeMode('light')}
           className={`${
             themeMode === 'light'
-              ? 'bg-white/10 text-zinc-100'
+              ? 'bg-blue-500/10 text-blue-500'
               : isDarkMode
               ? 'text-zinc-400 hover:text-zinc-200'
               : 'text-zinc-600 hover:text-zinc-800'
@@ -80,7 +80,7 @@ const ThemeSwitcher: React.FC = () => {
           onClick={() => setThemeMode('dark')}
           className={`${
             themeMode === 'dark'
-              ? 'bg-white/10 text-zinc-100'
+              ? 'bg-blue-500/10 text-blue-500'
               : isDarkMode
               ? 'text-zinc-400 hover:text-zinc-200'
               : 'text-zinc-600 hover:text-zinc-800'
@@ -94,7 +94,7 @@ const ThemeSwitcher: React.FC = () => {
           onClick={() => setThemeMode('system')}
           className={`${
             themeMode === 'system'
-              ? 'bg-white/10 text-zinc-100'
+              ? 'bg-blue-500/10 text-blue-500'
               : isDarkMode
               ? 'text-zinc-400 hover:text-zinc-200'
               : 'text-zinc-600 hover:text-zinc-800'
