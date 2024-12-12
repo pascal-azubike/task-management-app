@@ -152,12 +152,12 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
 
   return (
     <div>
-      <div className="mb-4">
+      <div className="mb-6">
         <Input
-          placeholder="Search tasks by title or priority..."
+          placeholder="Search tasks..."
           prefix={<SearchOutlined className="text-zinc-400" />}
           onChange={e => setSearchText(e.target.value)}
-          className="search-input w-64"
+          className="search-input"
           allowClear
         />
       </div>
