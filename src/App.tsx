@@ -76,23 +76,23 @@ function App() {
   return (
     <ConfigProvider theme={theme}>
       <div className="min-h-screen bg-zinc-900">
-        <div className="  mx-auto container px-6 py-12">
-          <h1 className="text-4xl font-bold text-center mb-12 gradient-text">
+        <div className="container mx-auto px-4 py-8">
+          <h1 className="text-4xl font-bold text-center mb-8 gradient-text">
             Task Management
           </h1>
           
-          <div className="grid min-[1200px]:grid-cols-5 gap-12">
-            <div className="min-[1200px]:col-span-2  ">
-              <h2 className="text-2xl font-semibold mb-6 text-zinc-100">Add New Task</h2>
-              <div className="form-container  p-6">
+          <div className="flex flex-col lg:flex-row gap-8">
+            <div className="lg:w-1/3">
+              <h2 className="text-2xl font-semibold mb-4 text-zinc-100">Add New Task</h2>
+              <div className="form-container p-6">
                 <TaskForm onSubmit={handleCreateTask} />
               </div>
             </div>
             
-            <div className=" min-[1200px]:col-span-3">
-              <h2 className="text-2xl font-semibold mb-6 text-zinc-100">Task List</h2>
+            <div className="lg:w-2/3">
+              <h2 className="text-2xl font-semibold mb-4 text-zinc-100">Task List</h2>
               <div className="form-container p-6">
-                <div className="table-container">
+                <div className="overflow-x-auto">
                   <TaskList
                     tasks={tasks}
                     onEdit={handleEdit}

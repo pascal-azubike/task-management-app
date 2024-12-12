@@ -55,54 +55,58 @@ const TaskForm = ({ onSubmit, initialValues, isEditing = false }: TaskFormProps)
       } : {
         completed: false
       }}
-      className="p-6 rounded-lg bg-opacity-10 bg-white backdrop-blur-lg border border-gray-700"
+      className="w-full"
     >
-      <Form.Item
-        name="title"
-        label="Task Title"
-        rules={[{ required: true, message: 'Please enter a task title' }]}
-      >
-        <Input placeholder="Enter task title" />
-      </Form.Item>
-
-      <Form.Item
-        name="priority"
-        label="Priority"
-        rules={[{ required: true, message: 'Please select a priority' }]}
-      >
-        <Select placeholder="Select priority">
-          <Select.Option value="High">High</Select.Option>
-          <Select.Option value="Medium">Medium</Select.Option>
-          <Select.Option value="Low">Low</Select.Option>
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-        name="dueDate"
-        label="Due Date"
-        rules={[{ required: true, message: 'Please select a due date' }]}
-      >
-        <DatePicker className="w-full" inputReadOnly />
-      </Form.Item>
-
-      <Form.Item name="completed" label="Status">
-        <Radio.Group className="status-radio-group">
-          <Radio value={false}>Not Completed</Radio>
-          <Radio value={true}>Completed</Radio>
-        </Radio.Group>
-      </Form.Item>
-
-      <Form.Item>
-        <Button 
-          type="primary" 
-          htmlType="submit" 
-          className="w-full"
-          loading={isSubmitting}
-          disabled={isSubmitting}
+      <div className="space-y-4">
+        <Form.Item
+          name="title"
+          label="Task Title"
+          rules={[{ required: true, message: 'Please enter a task title' }]}
         >
-          {isEditing ? 'Update Task' : 'Add Task'}
-        </Button>
-      </Form.Item>
+          <Input placeholder="Enter task title" />
+        </Form.Item>
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          <Form.Item
+            name="priority"
+            label="Priority"
+            rules={[{ required: true, message: 'Please select a priority' }]}
+          >
+            <Select placeholder="Select priority">
+              <Select.Option value="High">High</Select.Option>
+              <Select.Option value="Medium">Medium</Select.Option>
+              <Select.Option value="Low">Low</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="dueDate"
+            label="Due Date"
+            rules={[{ required: true, message: 'Please select a due date' }]}
+          >
+            <DatePicker className="w-full" inputReadOnly />
+          </Form.Item>
+        </div>
+
+        <Form.Item name="completed" label="Status">
+          <Radio.Group className="status-radio-group">
+            <Radio value={false}>Not Completed</Radio>
+            <Radio value={true}>Completed</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Form.Item className="mb-0">
+          <Button 
+            type="primary" 
+            htmlType="submit" 
+            className="w-full"
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
+            {isEditing ? 'Update Task' : 'Add Task'}
+          </Button>
+        </Form.Item>
+      </div>
     </Form>
   );
 };

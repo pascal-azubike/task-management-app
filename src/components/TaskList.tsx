@@ -167,11 +167,10 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
         rowKey="id"
         loading={loading}
         pagination={{
+          position: ['bottom'],
           pageSize: 5,
-          showSizeChanger: true,
-          showTotal: (total) => <span className="text-zinc-400">Total {total} tasks</span>,
+          showSizeChanger: false,
         }}
-        className="mt-4"
       />
     </div>
   );

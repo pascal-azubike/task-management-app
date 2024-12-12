@@ -8,6 +8,59 @@
   backdrop-filter: blur(12px) !important;
 }
 
+.ant-form-item {
+  margin-bottom: 0 !important;
+}
+
+.ant-form-item-label > label {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 500 !important;
+}
+
+.ant-input,
+.ant-select-selector,
+.ant-picker {
+  background: rgba(39, 39, 42, 0.6) !important;
+  border: 1px solid rgba(63, 63, 70, 0.8) !important;
+  border-radius: 6px !important;
+}
+
+.ant-input:hover,
+.ant-select-selector:hover,
+.ant-picker:hover {
+  border-color: #60a5fa !important;
+}
+
+.ant-input:focus,
+.ant-select-selector:focus,
+.ant-picker-focused {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+}
+
+.ant-select-selection-placeholder,
+.ant-input::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.ant-form-item-explain-error {
+  color: #ef4444 !important;
+  margin-top: 4px !important;
+  font-size: 0.875rem !important;
+}
+
+@media (max-width: 640px) {
+  .form-container {
+    padding: 16px !important;
+  }
+  
+  .status-radio-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+}
+
 /* Form styles */
 .ant-form-item-label > label {
   color: #e4e4e7 !important;
@@ -131,6 +184,10 @@
   background: transparent !important;
 }
 
+.ant-table-wrapper {
+  min-width: 800px !important;
+}
+
 .ant-table-thead > tr > th {
   background: rgba(24, 24, 27, 0.8) !important;
   color: #60a5fa !important;
@@ -149,38 +206,12 @@
   background: rgba(39, 39, 42, 0.8) !important;
 }
 
-.ant-table-cell {
-  vertical-align: middle !important;
-}
-
-/* Title cell specific styles */
-.ant-table-cell .whitespace-normal {
-  white-space: normal !important;
-  word-wrap: break-word !important;
-  line-height: 1.5 !important;
-}
-
 /* Status and Priority Tags */
 .status-tag, .priority-tag {
   min-width: 100px !important;
   text-align: center !important;
   padding: 4px 12px !important;
   font-weight: 500 !important;
-  border-radius: 6px !important;
-}
-
-/* Table Actions */
-.ant-table-cell .ant-space {
-  display: flex !important;
-  justify-content: center !important;
-}
-
-.ant-table-cell .ant-btn {
-  width: 32px !important;
-  height: 32px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
   border-radius: 6px !important;
 }
 
@@ -434,7 +465,7 @@
   color: #ffffff !important;
 }
 
-/* Table container */
+/* Responsive table container */
 .table-container {
   overflow-x: auto !important;
   max-width: 100% !important;
@@ -443,13 +474,7 @@
 }
 
 .table-container .ant-table {
-  min-width: 100% !important;
-  width: auto !important;
-  max-width: none !important;
-}
-
-.table-container .ant-table-container {
-  border-radius: 0 !important;
+  min-width: 800px !important;
 }
 
 .table-container::-webkit-scrollbar {
@@ -468,4 +493,21 @@
 
 .table-container::-webkit-scrollbar-thumb:hover {
   background: rgba(96, 165, 250, 0.5) !important;
+}
+
+/* Search input styles */
+.search-input {
+  max-width: 100% !important;
+}
+
+@media (max-width: 640px) {
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    padding: 12px 8px !important;
+  }
+
+  .status-tag, .priority-tag {
+    min-width: 90px !important;
+    padding: 4px 8px !important;
+  }
 }
