@@ -1,5 +1,5 @@
 import { Table, Button, Tag, Space, Popconfirm, notification, Input, Tooltip } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { Task, Priority } from '../types/task';
 import dayjs from 'dayjs';
@@ -19,14 +19,21 @@ interface TaskListProps {
   loading: boolean;
 }
 
-const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
+const TaskList = ({ tasks: initialTasks, onEdit, onDelete, loading }: TaskListProps) => {
   const [searchText, setSearchText] = useState('');
+  const [tasks, setTasks] = useState(initialTasks);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: 0
   });
 
+  // Keep local tasks state in sync with props from parent
+  useEffect(() => {
+    setTasks(initialTasks);
+  }, [initialTasks]);
+
+  // Fetch tasks whenever page number or page size changes
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -44,6 +51,7 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
     fetchTasks();
   }, [pagination.current, pagination.pageSize]);
 
+  // Handle pagination changes from the table
   const handleTableChange = (newPagination: TablePaginationConfig) => {
     setPagination({
       current: newPagination.current || 1,
@@ -52,15 +60,17 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
     });
   };
 
+  // Get the appropriate color for each priority level
   const getPriorityColor = (priority: Priority) => {
     const colors = {
-      High: '#ef4444',
-      Medium: '#faad14',
-      Low: '#60a5fa',
+      High: '#ef4444',    // Red for high priority
+      Medium: '#faad14',  // Orange for medium priority
+      Low: '#60a5fa',     // Blue for low priority
     };
     return colors[priority];
   };
 
+  // Handle task deletion with success/error notifications
   const handleDelete = async (id: number) => {
     try {
       await onDelete(id);
@@ -75,6 +85,7 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
     }
   };
 
+  // Filter tasks based on search text (looks in title and priority)
   const filteredTasks = tasks.filter(task =>
     task.title.toLowerCase().includes(searchText.toLowerCase()) ||
     task.priority.toLowerCase().includes(searchText.toLowerCase())
