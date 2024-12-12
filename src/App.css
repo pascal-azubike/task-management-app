@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Ant Design overrides and custom styles */
+.ant-btn-primary {
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+  transition: all 0.3s ease;
+}
+
+.ant-btn-primary:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Custom neon text effect */
+.neon-text {
+  text-shadow: 
+    0 0 5px rgba(0, 255, 157, 0.5),
+    0 0 10px rgba(0, 255, 157, 0.3),
+    0 0 15px rgba(0, 255, 157, 0.2);
+}
+
+/* Custom card styles */
+.ant-card {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+}
+
+/* Table styles */
+.ant-table {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+}
+
+.ant-table-cell {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Form control styles */
+.ant-input,
+.ant-select-selector,
+.ant-picker {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Hover effects */
+.ant-input:hover,
+.ant-select-selector:hover,
+.ant-picker:hover {
+  border-color: rgba(0, 255, 157, 0.5) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 157, 0.2) !important;
+}
+
+/* Focus effects */
+.ant-input:focus,
+.ant-select-selector:focus,
+.ant-picker-focused {
+  border-color: #00ff9d !important;
+  box-shadow: 0 0 15px rgba(0, 255, 157, 0.3) !important;
+}
