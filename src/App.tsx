@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { ConfigProvider, Modal } from 'antd';
-import theme from './theme/themeConfig';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
+import ThemeSwitcher from './components/ThemeSwitcher';
 import { Task, TaskFormData } from './types/task';
 import { taskService } from './services/taskService';
+import { ThemeProvider, useTheme, getThemeConfig } from './contexts/ThemeContext';
 import './App.css';
 
-function App() {
+const AppContent = () => {
+  const { isDarkMode } = useTheme();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -74,23 +76,30 @@ function App() {
   };
 
   return (
-    <ConfigProvider theme={theme}>
-      <div className="min-h-screen bg-zinc-900">
-        <div className=" px-4 md:px-12 py-8">
-          <h1 className="text-4xl font-bold text-center mb-8 gradient-text">
-            Task Management
-          </h1>
+    <ConfigProvider theme={getThemeConfig(isDarkMode)}>
+      <div className={`min-h-screen ${isDarkMode ? 'bg-zinc-900' : 'bg-gray-50'}`}>
+        <div className="px-4 md:px-12 py-8">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className={`text-4xl font-bold ${isDarkMode ? 'gradient-text' : 'text-gray-800'}`}>
+              Task Management
+            </h1>
+            <ThemeSwitcher />
+          </div>
           
           <div className="flex flex-col lg:flex-row gap-16">
             <div className="lg:w-1/3 container mx-auto">
-              <h2 className="text-2xl font-semibold mb-4 text-zinc-100">Add New Task</h2>
+              <h2 className={`text-2xl font-semibold mb-4 ${isDarkMode ? 'text-zinc-100' : 'text-gray-700'}`}>
+                Add New Task
+              </h2>
               <div className="form-container p-6">
                 <TaskForm onSubmit={handleCreateTask} />
               </div>
             </div>
             
             <div className="lg:w-2/3">
-              <h2 className="text-2xl font-semibold mb-4 text-zinc-100">Task List</h2>
+              <h2 className={`text-2xl font-semibold mb-4 ${isDarkMode ? 'text-zinc-100' : 'text-gray-700'}`}>
+                Task List
+              </h2>
               <div className="form-container p-6">
                 <div className="overflow-x-auto">
                   <TaskList
@@ -105,7 +114,9 @@ function App() {
           </div>
 
           <Modal
-            title={<span className="text-lg font-semibold text-zinc-100">Edit Task</span>}
+            title={<span className={`text-lg font-semibold ${isDarkMode ? 'text-zinc-100' : 'text-gray-800'}`}>
+              Edit Task
+            </span>}
             open={isModalOpen}
             onCancel={handleModalClose}
             footer={null}
@@ -124,6 +135,14 @@ function App() {
         </div>
       </div>
     </ConfigProvider>
+  );
+};
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
