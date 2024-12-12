@@ -205,7 +205,7 @@
 }
 
 .ant-table-wrapper {
-  min-width: 800px !important;
+  min-width: 500px !important;
 }
 
 .ant-table-thead > tr > th {
@@ -883,4 +883,36 @@ nav img {
 
 nav img:hover {
   opacity: 0.9;
+}
+
+/* Warning banner styles */
+.mock-api-warning {
+  background: rgba(234, 179, 8, 0.1) !important;
+  border: 1px solid rgba(234, 179, 8, 0.3) !important;
+  color: var(--text-primary) !important;
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  margin-bottom: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.mock-api-warning .anticon {
+  color: #eab308 !important;
+  font-size: 20px !important;
+}
+
+.mock-api-warning-text {
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+}
+
+@media (max-width: 640px) {
+  .mock-api-warning {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 16px !important;
+  }
 }
