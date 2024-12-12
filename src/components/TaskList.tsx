@@ -1,4 +1,4 @@
-import { Table, Button, Tag, Space, Popconfirm, notification, Input } from 'antd';
+import { Table, Button, Tag, Space, Popconfirm, notification, Input, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { Task, Priority } from '../types/task';
 import dayjs from 'dayjs';
@@ -49,7 +49,9 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
       dataIndex: 'title',
       key: 'title',
       render: (text: string) => (
-        <div className="task-title-cell">{text}</div>
+        <Tooltip title={text} placement="topLeft">
+          <div className="task-title-cell">{text}</div>
+        </Tooltip>
       ),
       sorter: (a: Task, b: Task) => a.title.localeCompare(b.title),
       width: '30%',
@@ -59,17 +61,19 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
       dataIndex: 'priority',
       key: 'priority',
       render: (priority: Priority) => (
-        <Tag
-          color={getPriorityColor(priority)}
-          className="priority-tag"
-          style={{
-            background: `${getPriorityColor(priority)}20`,
-            border: `1px solid ${getPriorityColor(priority)}`,
-            color: getPriorityColor(priority)
-          }}
-        >
-          {priority}
-        </Tag>
+        <Tooltip title={`${priority} Priority Task`}>
+          <Tag
+            color={getPriorityColor(priority)}
+            className="priority-tag"
+            style={{
+              background: `${getPriorityColor(priority)}20`,
+              border: `1px solid ${getPriorityColor(priority)}`,
+              color: getPriorityColor(priority)
+            }}
+          >
+            {priority}
+          </Tag>
+        </Tooltip>
       ),
       filters: [
         { text: 'High', value: 'High' },
@@ -85,7 +89,9 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
       dataIndex: 'dueDate',
       key: 'dueDate',
       render: (date: string) => (
-        <span className="text-zinc-300">{dayjs(date).format('MMM D, YYYY')}</span>
+        <Tooltip title={`Due on ${dayjs(date).format('MMMM D, YYYY')}`}>
+          <span className="text-zinc-300">{dayjs(date).format('MMM D, YYYY')}</span>
+        </Tooltip>
       ),
       sorter: (a: Task, b: Task) => dayjs(a.dueDate).unix() - dayjs(b.dueDate).unix(),
       width: '15%',
@@ -96,16 +102,18 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
       dataIndex: 'completed',
       key: 'completed',
       render: (completed: boolean) => (
-        <Tag
-          className="status-tag"
-          style={{
-            background: completed ? '#10b98120' : '#ef444420',
-            border: `1px solid ${completed ? '#10b981' : '#ef4444'}`,
-            color: completed ? '#10b981' : '#ef4444'
-          }}
-        >
-          {completed ? 'Completed' : 'Not Completed'}
-        </Tag>
+        <Tooltip title={completed ? 'Task Completed' : 'Task Not Completed'}>
+          <Tag
+            className="status-tag"
+            style={{
+              background: completed ? '#10b98120' : '#ef444420',
+              border: `1px solid ${completed ? '#10b981' : '#ef4444'}`,
+              color: completed ? '#10b981' : '#ef4444'
+            }}
+          >
+            {completed ? 'Completed' : 'Not Completed'}
+          </Tag>
+        </Tooltip>
       ),
       filters: [
         { text: 'Completed', value: true },
@@ -120,12 +128,14 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
       key: 'actions',
       render: (_: any, record: Task) => (
         <Space>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => onEdit(record)}
-            className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10"
-          />
+          <Tooltip title="Edit Task">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={() => onEdit(record)}
+              className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10"
+            />
+          </Tooltip>
           <Popconfirm
             title="Delete Task"
             description="Are you sure you want to delete this task?"
@@ -137,11 +147,13 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
               style: { boxShadow: '0 0 10px rgba(239, 68, 68, 0.3)' }
             }}
           >
-            <Button
-              type="text"
-              icon={<DeleteOutlined />}
-              className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
-            />
+            <Tooltip title="Delete Task">
+              <Button
+                type="text"
+                icon={<DeleteOutlined />}
+                className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
+              />
+            </Tooltip>
           </Popconfirm>
         </Space>
       ),
@@ -153,13 +165,15 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
   return (
     <div>
       <div className="mb-6">
-        <Input
-          placeholder="Search tasks..."
-          prefix={<SearchOutlined className="text-zinc-400" />}
-          onChange={e => setSearchText(e.target.value)}
-          className="search-input"
-          allowClear
-        />
+        <Tooltip title="Search tasks by title or priority">
+          <Input
+            placeholder="Search tasks..."
+            prefix={<SearchOutlined className="text-zinc-400" />}
+            onChange={e => setSearchText(e.target.value)}
+            className="search-input"
+            allowClear
+          />
+        </Tooltip>
       </div>
       <Table
         columns={columns}

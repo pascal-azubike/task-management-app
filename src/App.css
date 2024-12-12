@@ -765,3 +765,17 @@
 .ant-select-item-option-selected:hover {
   background: rgba(96, 165, 250, 0.2) !important;
 }
+
+/* Tooltip styles */
+.ant-tooltip {
+  --antd-arrow-background-color: rgba(39, 39, 42, 0.95) !important;
+}
+
+.ant-tooltip-inner {
+  background: rgba(39, 39, 42, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(63, 63, 70, 0.8) !important;
+  padding: 6px 12px !important;
+  font-size: 0.875rem !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
