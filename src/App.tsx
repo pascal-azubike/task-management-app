@@ -76,13 +76,13 @@ function App() {
   return (
     <ConfigProvider theme={theme}>
       <div className="min-h-screen bg-zinc-900">
-        <div className="container mx-auto px-4 py-8">
+        <div className=" px-4 md:px-12 py-8">
           <h1 className="text-4xl font-bold text-center mb-8 gradient-text">
             Task Management
           </h1>
           
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div className="lg:w-1/3">
+          <div className="flex flex-col lg:flex-row gap-16">
+            <div className="lg:w-1/3 container mx-auto">
               <h2 className="text-2xl font-semibold mb-4 text-zinc-100">Add New Task</h2>
               <div className="form-container p-6">
                 <TaskForm onSubmit={handleCreateTask} />

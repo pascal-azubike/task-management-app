@@ -49,10 +49,10 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
       dataIndex: 'title',
       key: 'title',
       render: (text: string) => (
-        <div className="text-white font-medium whitespace-normal">{text}</div>
+        <div className="task-title-cell">{text}</div>
       ),
       sorter: (a: Task, b: Task) => a.title.localeCompare(b.title),
-      width: '40%',
+      width: '30%',
     },
     {
       title: 'Priority',
@@ -169,7 +169,8 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
         pagination={{
           position: ['bottom'],
           pageSize: 5,
-          showSizeChanger: false,
+          showSizeChanger: true,
+          showTotal: (total) => <span className="text-zinc-400">Total {total} tasks</span>,
         }}
       />
     </div>
