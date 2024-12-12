@@ -127,11 +127,11 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }: TaskListProps) => {
       key: 'dueDate',
       render: (date: string) => (
         <Tooltip title={`Due on ${dayjs(date).format('MMMM D, YYYY')}`}>
-          <span className="text-zinc-300">{dayjs(date).format('MMM D, YYYY')}</span>
+          <span className="text-zinc-300 date-cell">{dayjs(date).format('MMM D, YYYY')}</span>
         </Tooltip>
       ),
       sorter: (a, b) => dayjs(a.dueDate).unix() - dayjs(b.dueDate).unix(),
-      width: '15%',
+      className: 'date-column',
       align: 'center',
     },
     {

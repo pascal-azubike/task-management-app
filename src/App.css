@@ -204,9 +204,7 @@
   background: transparent !important;
 }
 
-.ant-table-wrapper {
-  min-width: 500px !important;
-}
+
 
 .ant-table-thead > tr > th {
   background: var(--bg-container) !important;
@@ -335,7 +333,20 @@
   text-overflow: ellipsis !important;
   line-height: 1.5 !important;
   max-width: 300px !important;
+  min-width: 100px !important;
   margin: 0 auto !important;
+}
+
+/* Date cell styles */
+.date-column {
+  min-width: 120px !important;
+  width: 15% !important;
+}
+
+.date-cell {
+  display: inline-block !important;
+  text-align: center !important;
+  width: 100% !important;
 }
 
 /* Pagination styles */
