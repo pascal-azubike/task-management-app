@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { ConfigProvider, Modal } from 'antd';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
-import ThemeSwitcher from './components/ThemeSwitcher';
+import ProjectInfo from './components/ProjectInfo';
+import Navbar from './components/Navbar';
 import { Task, TaskFormData } from './types/task';
 import { taskService } from './services/taskService';
 import { ThemeProvider, useTheme, getThemeConfig } from './contexts/ThemeContext';
@@ -78,13 +79,9 @@ const AppContent = () => {
   return (
     <ConfigProvider theme={getThemeConfig(isDarkMode)}>
       <div className={`min-h-screen ${isDarkMode ? 'bg-zinc-900' : 'bg-gray-50'}`}>
-        <div className="px-4 md:px-12 py-8">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className={`text-4xl font-bold ${isDarkMode ? 'gradient-text' : 'text-gray-800'}`}>
-              Task Management
-            </h1>
-            <ThemeSwitcher />
-          </div>
+        <Navbar />
+        <div className="px-4 md:px-12 py-8 pt-24">
+          <ProjectInfo />
           
           <div className="flex flex-col lg:flex-row gap-16">
             <div className="lg:w-1/3 container mx-auto">
