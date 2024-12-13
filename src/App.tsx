@@ -9,6 +9,7 @@ import { Task, TaskFormData } from './types/task';
 import { taskService } from './services/taskService';
 import { ThemeProvider, useTheme, getThemeConfig } from './contexts/ThemeContext';
 import './App.css';
+import { setDocumentTitle, setFaviconFromLogo } from './utils/documentUtils';
 
 /**
  * Root component of the application.
@@ -25,6 +26,11 @@ const AppContent = () => {
 
   useEffect(() => {
     fetchTasks();
+  }, []);
+
+  useEffect(() => {
+    setDocumentTitle('Task Management');
+    setFaviconFromLogo();
   }, []);
 
   const fetchTasks = async () => {
