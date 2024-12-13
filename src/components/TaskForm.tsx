@@ -1,6 +1,5 @@
 import { Form, Input, Select, DatePicker, Radio, Button, notification } from 'antd';
-import { Priority, TaskFormData } from '../types/task';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
