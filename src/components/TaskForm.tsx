@@ -1,4 +1,25 @@
-import { Form, Input, Select, DatePicker, Radio, Button, notification } from 'antd';
+import Form from 'antd/es/form';
+import 'antd/es/form/style';
+
+import Input from 'antd/es/input';
+import 'antd/es/input/style';
+
+import Select from 'antd/es/select';
+import 'antd/es/select/style';
+
+import DatePicker from 'antd/es/date-picker';
+import 'antd/es/date-picker/style';
+
+import Radio from 'antd/es/radio';
+import 'antd/es/radio/style';
+
+import Button from 'antd/es/button';
+import 'antd/es/button/style';
+
+import notification from 'antd/es/notification';
+import 'antd/es/notification/style';
+
+import {  TaskFormData } from '../types/task';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';

@@ -1,5 +1,12 @@
 import React from 'react';
-import { Dropdown, Button, Tooltip } from 'antd';
+import Dropdown from 'antd/es/dropdown';
+import 'antd/es/dropdown/style';
+
+import Button from 'antd/es/button';
+import 'antd/es/button/style';
+
+import Tooltip from 'antd/es/tooltip';
+import 'antd/es/tooltip/style';
 import { DesktopOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
 import { useTheme } from '../contexts/ThemeContext';
 

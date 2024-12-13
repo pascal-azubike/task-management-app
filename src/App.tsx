@@ -1,5 +1,16 @@
 import { useState, useEffect } from 'react';
-import { ConfigProvider, Modal, Alert, Button } from 'antd';
+import ConfigProvider from 'antd/es/config-provider';
+import 'antd/es/config-provider/style';
+
+import Modal from 'antd/es/modal';
+import 'antd/es/modal/style';
+
+import Alert from 'antd/es/alert';
+import 'antd/es/alert/style';
+
+import Button from 'antd/es/button';
+import 'antd/es/button/style';
+
 import axios from 'axios';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';

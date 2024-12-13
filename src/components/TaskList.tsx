@@ -1,6 +1,31 @@
-import { Table, Button, Tag, Space, Popconfirm, notification, Input, Tooltip } from 'antd';
+
 import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
+import Table from 'antd/es/table';
+import 'antd/es/table/style';
+
+import Button from 'antd/es/button';
+import 'antd/es/button/style';
+
+import Tag from 'antd/es/tag';
+import 'antd/es/tag/style';
+
+import Space from 'antd/es/space';
+import 'antd/es/space/style';
+
+import Popconfirm from 'antd/es/popconfirm';
+import 'antd/es/popconfirm/style';
+
+import notification from 'antd/es/notification';
+import 'antd/es/notification/style';
+
+import Input from 'antd/es/input';
+import 'antd/es/input/style';
+
+import Tooltip from 'antd/es/tooltip';
+import 'antd/es/tooltip/style';
+
 import { EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+
 import { Task, Priority } from '../types/task';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
@@ -190,7 +215,7 @@ const TaskList = ({ tasks: initialTasks, onEdit, onDelete, loading }: TaskListPr
             onConfirm={() => handleDelete(record.id)}
             okText="Yes"
             cancelText="No"
-            okButtonProps={{ 
+            okButtonProps={{
               className: 'bg-red-500 hover:bg-red-600 border-none',
               style: { boxShadow: '0 0 10px rgba(239, 68, 68, 0.3)' }
             }}
