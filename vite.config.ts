@@ -5,13 +5,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // React and React-related libraries
-          if (id.includes('/node_modules/react')) {
-            return 'react'; // Separate React and React DOM
-          }
-          if (id.includes('/node_modules/react-dom')) {
-            return 'react-dom'; // Separate React DOM
-          }
+    
 
           // Ant Design and related libraries
           if (id.includes('/node_modules/antd')) {
